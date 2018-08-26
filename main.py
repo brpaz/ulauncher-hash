@@ -21,11 +21,11 @@ class KeywordQueryEventListener(EventListener):
     def on_event(self, event, extension):
         items = []
    
-        md5Hash = hashlib.md5(event.get_argument()).hexdigest()
-        sha1Hash = hashlib.sha1(event.get_argument()).hexdigest()
-        sha224Hash = hashlib.sha224(event.get_argument()).hexdigest()
-        sha256Hash = hashlib.sha256(event.get_argument()).hexdigest()
-        sha512Hash = hashlib.sha512(event.get_argument()).hexdigest()
+        md5Hash = hashlib.md5(event.get_argument().encode('utf-8')).hexdigest()
+        sha1Hash = hashlib.sha1(event.get_argument().encode('utf-8')).hexdigest()
+        sha224Hash = hashlib.sha224(event.get_argument().encode('utf-8')).hexdigest()
+        sha256Hash = hashlib.sha256(event.get_argument().encode('utf-8')).hexdigest()
+        sha512Hash = hashlib.sha512(event.get_argument().encode('utf-8')).hexdigest()
         
         items.append(ExtensionResultItem(icon='images/icon.png',
                                          name=md5Hash,
