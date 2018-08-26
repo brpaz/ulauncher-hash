@@ -12,7 +12,7 @@
         {
             "id": "hash_kw",
             "type": "keyword",
-            "name": "Keyword",
+            "name": "Hash",
             "default_value": "hash"
         }
     ]
