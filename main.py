@@ -20,8 +20,14 @@ class KeywordQueryEventListener(EventListener):
         items = []
         argument = event.get_argument().encode('utf-8')
         keyword = event.get_keyword()
+
+        # Find the keyword id using the keyword (since the keyword can be changed by users)
+        for kwId, kw in extension.preferences.iteritems():
+            if kw == keyword:
+                keywordId = kwId[:-3] # Remove the "_kw" suffix
+
         # Show the algorithm specified as keyword, or all if the keyword was "hash"
-        algos = hashlib.algorithms if keyword == 'hash' else [keyword]
+        algos = hashlib.algorithms if keywordId == 'hash' else [keywordId]
 
         for algo in algos:
             hash = getattr(hashlib, algo)(argument).hexdigest()
