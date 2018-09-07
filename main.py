@@ -10,65 +10,30 @@ from ulauncher.api.shared.action.CopyToClipboardAction import CopyToClipboardAct
 logger = logging.getLogger(__name__)
 
 class HashExtension(Extension):
-
     def __init__(self):
         logger.info('init hash Extension')
         super(HashExtension, self).__init__()
         self.subscribe(KeywordQueryEvent, KeywordQueryEventListener())
 
 class KeywordQueryEventListener(EventListener):
-
     def on_event(self, event, extension):
         items = []
-   
-        md5Hash = hashlib.md5(event.get_argument().encode('utf-8')).hexdigest()
-        sha1Hash = hashlib.sha1(event.get_argument().encode('utf-8')).hexdigest()
-        sha224Hash = hashlib.sha224(event.get_argument().encode('utf-8')).hexdigest()
-        sha256Hash = hashlib.sha256(event.get_argument().encode('utf-8')).hexdigest()
-        sha512Hash = hashlib.sha512(event.get_argument().encode('utf-8')).hexdigest()
-        
-        items.append(ExtensionResultItem(icon='images/icon.png',
-                                         name=md5Hash,
-                                         description='md5',
-                                         highlightable=False,
-                                         on_enter=CopyToClipboardAction(
-                                             md5Hash)
-                                         ))
+        argument = (event.get_argument() or '').encode('utf-8')
+        keyword = event.get_keyword()
 
-        items.append(ExtensionResultItem(icon='images/icon.png',
-                                          name=sha1Hash,
-                                          description='sha1',
-                                          highlightable=False,
-                                          on_enter=CopyToClipboardAction(
-                                              sha1Hash)
-                                          ))
+        # Find the keyword id using the keyword (since the keyword can be changed by users)
+        for kwId, kw in extension.preferences.iteritems():
+            if kw == keyword:
+                keywordId = kwId[:-3] # Remove the "_kw" suffix
 
+        # Show the algorithm specified as keyword, or all if the keyword was "hash"
+        algos = hashlib.algorithms if keywordId == 'hash' else [keywordId]
 
-        items.append(ExtensionResultItem(icon='images/icon.png',
-                                          name=sha224Hash,
-                                         description='sha224',
-                                         highlightable=False,
-                                         on_enter=CopyToClipboardAction(
-                                             sha224Hash)
-                                         ))
-        
-        items.append(ExtensionResultItem(icon='images/icon.png',
-                                          name=sha256Hash,
-                                          description='sha256',
-                                          highlightable=False,
-                                          on_enter=CopyToClipboardAction(
-                                              sha256Hash)
-                                          ))
-
-        items.append(ExtensionResultItem(icon='images/icon.png',
-                                         name=sha512Hash,
-                                         description='sha512',
-                                         highlightable=False,
-                                         on_enter=CopyToClipboardAction(
-                                              sha512Hash)
-                                         ))
+        for algo in algos:
+            hash = getattr(hashlib, algo)(argument).hexdigest()
+            items.append(ExtensionResultItem(icon='images/icon.png', name=hash, description=algo, highlightable=False, on_enter=CopyToClipboardAction(hash)))
 
         return RenderResultListAction(items)
 
 if __name__ == '__main__':
-   HashExtension().run()
+    HashExtension().run()

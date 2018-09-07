@@ -14,6 +14,42 @@
             "type": "keyword",
             "name": "Hash",
             "default_value": "hash"
+        },
+        {
+            "id": "md5_kw",
+            "type": "keyword",
+            "name": "md5",
+            "default_value": "md5"
+        },
+        {
+            "id": "sha1_kw",
+            "type": "keyword",
+            "name": "sha1",
+            "default_value": "sha1"
+        },
+        {
+            "id": "sha224_kw",
+            "type": "keyword",
+            "name": "sha224",
+            "default_value": "sha224"
+        },
+        {
+            "id": "sha256_kw",
+            "type": "keyword",
+            "name": "sha256",
+            "default_value": "sha256"
+        },
+        {
+            "id": "sha384_kw",
+            "type": "keyword",
+            "name": "sha384",
+            "default_value": "sha384"
+        },
+        {
+            "id": "sha512_kw",
+            "type": "keyword",
+            "name": "sha512",
+            "default_value": "sha512"
         }
     ]
 }
