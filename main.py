@@ -18,7 +18,7 @@ class HashExtension(Extension):
 class KeywordQueryEventListener(EventListener):
     def on_event(self, event, extension):
         items = []
-        argument = event.get_argument().encode('utf-8')
+        argument = (event.get_argument() or '').encode('utf-8')
         keyword = event.get_keyword()
 
         # Find the keyword id using the keyword (since the keyword can be changed by users)
