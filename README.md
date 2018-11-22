@@ -1,6 +1,9 @@
 # Ulauncher hash
 
+**Notice. This extension is now deprecated in favour of [this](https://github.com/friday/ulauncher-hash2).**
+
 > [ulauncher](https://ulauncher.io/) Extension to generate hashes from a string, using common algoriths like md5, sha1, sha256 ..
+
 
 ## Usage
 
